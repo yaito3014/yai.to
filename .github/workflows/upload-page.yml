@@ -20,7 +20,7 @@ jobs:
           npm run build --preset github_pages
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./.output/public
+          path: github_pages/.output/public
 
   deploy:
     needs: build

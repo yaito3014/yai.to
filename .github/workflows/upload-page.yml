@@ -17,10 +17,10 @@ jobs:
           node-version: "20"
       - run: |
           npm install
-          npm run build --preset github_pages
+          npx nuxt build --preset github_pages
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: github_pages/.output/public
+          path: .output/public
 
   deploy:
     needs: build

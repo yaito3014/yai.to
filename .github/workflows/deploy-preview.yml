@@ -5,6 +5,7 @@ on:
 
 jobs:
   build-and-commit:
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v5
@@ -25,11 +26,24 @@ jobs:
           path: "dist"
       - run: |
           pushd dist
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "action@github.com"
           mkdir -p pr-${{ github.event.pull_request.number }}
           cp -r ../build/dist/* pr-${{ github.event.pull_request.number }}
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "action@github.com"
           git add .
-          git commit -m "Depoly for PR #${{ github.event.pull_request.number }}"
+          git commit -m "Depoly files for PR #${{ github.event.pull_request.number }}"
           git push origin gh-pages
           popd
+  cleanup:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: gh-pages
+      - run: |
+          rm -rf pr-${{ github.event.pull_request.number }}
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "action@github.com"
+          git add .
+          git commit -m "Remove files for PR #${{ github.event.pull_request.number }}"

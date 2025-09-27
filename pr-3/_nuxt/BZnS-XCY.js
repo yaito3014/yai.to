@@ -1,0 +1,1 @@
+import{_ as o}from"./BHs432En.js";import{_ as n,c as a,a as r,b as s,w as _,o as c,d as i}from"#entry";const d={};function u(f,t){const e=o;return c(),a("div",null,[t[1]||(t[1]=r("h1",null,"yai.to",-1)),s(e,{href:"https://github.com/yaito3014"},{default:_(()=>[...t[0]||(t[0]=[i("GitHub",-1)])]),_:1})])}const p=n(d,[["render",u]]);export{p as default};

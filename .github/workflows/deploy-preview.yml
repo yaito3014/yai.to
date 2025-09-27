@@ -21,7 +21,7 @@ jobs:
           popd
       - uses: actions/checkout@v5
         with:
-          ref: github-pages
+          ref: gh-pages
           path: "dist"
       - run: |
           pushd dist

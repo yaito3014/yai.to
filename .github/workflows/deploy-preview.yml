@@ -52,3 +52,4 @@ jobs:
           git config --global user.email "action@github.com"
           git add .
           git commit -m "Remove files for PR #${{ github.event.pull_request.number }}"
+          git push origin gh-pages

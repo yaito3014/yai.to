@@ -1,0 +1,34 @@
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "20"
+      - uses: actions/checkout@v5
+        with:
+          path: "build"
+      - run: |
+          pushd build
+          npm install
+          export PR_NUMBER=${{ github.event.pull_request.number }}
+          npx nuxt build --preset github-pages
+          popd
+      - uses: actions/checkout@v5
+        with:
+          path: "dist"
+      - run: |
+          pushd dist
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "action@github.com"
+          mkdir -p pr-${{ github.event.pull_request.number }}
+          cp -r ../build/dist/* pr-${{ github.event.pull_request.number }}
+          git add .
+          git commit -m "Depoly for PR #${{ github.event.pull_request.number }}"
+          git push origin gh-pages
+          popd

@@ -1,0 +1,33 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-commit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "20"
+      - uses: actions/checkout@v5
+        with:
+          path: "build"
+      - run: |
+          pushd build
+          npm install
+          npx nuxt build --preset github-pages
+          popd
+      - uses: actions/checkout@v5
+        with:
+          ref: gh-pages
+          path: "dist"
+      - run: |
+          pushd dist
+          cp -r ../build/dist/* .
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "action@github.com"
+          git add .
+          git commit -m "Depoly files"
+          git push origin gh-pages
+          popd

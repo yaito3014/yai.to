@@ -21,10 +21,13 @@ jobs:
           path: "build"
       - run: |
           pushd build
-          npm install
           export PR_NUMBER=${{ github.event.pull_request.number }}
+          npm install
           npx nuxt build --preset github-pages
           popd
+        env:
+          # Raises the GitHub API rate limit for the build-time repository fetch.
+          NUXT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v5
         with:
           ref: gh-pages
@@ -32,11 +35,13 @@ jobs:
       - run: |
           pushd dist
           mkdir -p pr-${{ github.event.pull_request.number }}
-          cp -r ../build/dist/* pr-${{ github.event.pull_request.number }}
+          # "dist/." (not "dist/*") so dotfiles such as .nojekyll are copied too.
+          cp -r ../build/dist/. pr-${{ github.event.pull_request.number }}
+          touch .nojekyll
           git config --global user.name "GitHub Actions"
           git config --global user.email "action@github.com"
           git add .
-          git commit -m "Depoly files for PR #${{ github.event.pull_request.number }}"
+          git commit -m "Deploy files for PR #${{ github.event.pull_request.number }}"
           git push origin gh-pages
           popd
   cleanup:

@@ -1,7 +1,13 @@
+<script setup lang="ts">
+const { app } = useRuntimeConfig()
+
+useHead({
+  link: [{ rel: 'icon', type: 'image/svg+xml', href: `${app.baseURL}favicon.svg` }],
+})
+</script>
+
 <template>
-  <div>
-    <NuxtLayout>
-      <NuxtPage></NuxtPage>
-    </NuxtLayout>
-  </div>
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>

@@ -9,7 +9,7 @@
 - `app/pages/writing.vue` — Zenn の記事と本の一覧
 - `server/api/repos.get.ts` / `server/api/zenn.get.ts` — ビルド時に GitHub API と Zenn のフィードを取得
 - `app/assets/css/main.css` — デザイントークンとスタイル（ライト / ダーク対応）
-- `public/yaitoPages/abeHiroshi/` — 旧ホームページ（静的 HTML）
+- `public/yaitoPages/abeHiroshi/` — 阿部寛のホームページ風ページ（静的 HTML）
 
 プロジェクトと記事の一覧は `nuxt build` 時に外部 API から取得し、静的 HTML に焼き込まれます。
 内容を更新するには再ビルド（main への push）が必要です。

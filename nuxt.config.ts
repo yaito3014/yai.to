@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      // Static legacy page under public/; not a Nuxt route, so keep the crawler out of it.
+      // Static HTML pages under public/; not Nuxt routes, so keep the crawler out of them.
       ignore: ['/yaitoPages'],
     },
   },

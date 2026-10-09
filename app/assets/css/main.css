@@ -26,8 +26,10 @@
   color-scheme: light;
 }
 
+/* Dark theme: follows the OS unless the user picked one via the header toggle
+   (data-theme="light" | "dark" on <html>, stored in localStorage). */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --bg: #0f1217;
     --bg-alt: #141922;
     --surface: #181e27;
@@ -46,6 +48,26 @@
     --shadow-hover: 0 4px 14px rgb(0 0 0 / 0.5);
     color-scheme: dark;
   }
+}
+
+:root[data-theme='dark'] {
+  --bg: #0f1217;
+  --bg-alt: #141922;
+  --surface: #181e27;
+  --text: #e6e9ef;
+  --text-muted: #9aa4b2;
+  --border: #262d37;
+  --border-strong: #38414e;
+  --accent: #3ddc6b;
+  --accent-hover: #5ee688;
+  --accent-soft: #123520;
+  --accent-contrast: #06250f;
+  --secondary: #8ea6f0;
+  --secondary-soft: #1b2440;
+  --danger-soft: #3a1a1a;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-hover: 0 4px 14px rgb(0 0 0 / 0.5);
+  color-scheme: dark;
 }
 
 /* ---------- Base ---------- */
@@ -247,6 +269,38 @@ img {
 .site-nav__link.router-link-exact-active {
   color: var(--accent);
   background: var(--accent-soft);
+}
+
+.site-header__right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  background: var(--bg-alt);
+}
+
+.theme-toggle svg {
+  width: 1.1rem;
+  height: 1.1rem;
 }
 
 .site-footer {

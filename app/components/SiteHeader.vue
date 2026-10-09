@@ -12,11 +12,14 @@ const links = [
       <NuxtLink to="/" class="brand" aria-label="yai.to ホーム">
         yai<span class="brand__dot">.</span>to
       </NuxtLink>
-      <nav class="site-nav" aria-label="メインナビゲーション">
-        <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="site-nav__link">
-          {{ link.label }}
-        </NuxtLink>
-      </nav>
+      <div class="site-header__right">
+        <nav class="site-nav" aria-label="メインナビゲーション">
+          <NuxtLink v-for="link in links" :key="link.to" :to="link.to" class="site-nav__link">
+            {{ link.label }}
+          </NuxtLink>
+        </nav>
+        <ThemeToggle />
+      </div>
     </div>
   </header>
 </template>

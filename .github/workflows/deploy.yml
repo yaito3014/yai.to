@@ -18,16 +18,22 @@ jobs:
           npm install
           npx nuxt build --preset github-pages
           popd
+        env:
+          # Raises the GitHub API rate limit for the build-time repository fetch.
+          NUXT_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/checkout@v5
         with:
           ref: gh-pages
           path: "dist"
       - run: |
           pushd dist
-          cp -r ../build/dist/* .
+          # "dist/." (not "dist/*") so dotfiles such as .nojekyll are copied too;
+          # without .nojekyll GitHub Pages drops the _nuxt directory.
+          cp -r ../build/dist/. .
+          touch .nojekyll
           git config --global user.name "GitHub Actions"
           git config --global user.email "action@github.com"
           git add .
-          git commit -m "Depoly files"
+          git commit -m "Deploy files"
           git push origin gh-pages
           popd
